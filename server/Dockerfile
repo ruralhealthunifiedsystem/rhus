@@ -1,25 +1,25 @@
-# Use the official Node image
+# Use Node 22
 FROM node:22
 
-# Install LibreOffice (needed for XLSX → PDF)
+# Install LibreOffice for XLSX → PDF conversion
 RUN apt-get update && \
     apt-get install -y libreoffice && \
     apt-get clean
 
-# Create app directory
+# Set working directory
 WORKDIR /app
 
-# Install dependencies
+# Copy package.json and install dependencies
 COPY package*.json ./
 RUN npm install --production
 
-# Copy source files
+# Copy entire project
 COPY . .
 
-# Ensure Node uses Koyeb's assigned port
+# Set PORT from environment (Koyeb assigns)
 ENV PORT=3000
 
-# Expose the port
+# Expose port
 EXPOSE 3000
 
 # Start your server
